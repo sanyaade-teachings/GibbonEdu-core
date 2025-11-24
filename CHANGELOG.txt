@@ -29,6 +29,8 @@ v31.0.00
     Changes With Important Notices
 
     Tweaks & Additions
+        Admissions: added a progress bar for admissions milestones to Manage Applications
+        Admissions: added a warning to Accept Application when milestones have not been completed
 
     Bug Fixes
 
