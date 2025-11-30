@@ -398,6 +398,41 @@ input[type="color"]::-moz-color-swatch {
 
 /*
  --------------------------------------------------------------------------
+  TinyMCE
+ --------------------------------------------------------------------------
+*/
+
+.tox-tinymce {
+    border: 1px solid hsl(220 14% 84%) !important;
+}
+
+.tox-promotion {
+    display: none;
+}
+
+.editor-minimal .tox-edit-area::before {
+    border-radius: 9px !important;
+}
+
+.editor-full .tox .tox-menubar {
+    display: none;
+}
+
+.editor-full .tox.tox-fullscreen .tox-menubar {
+    display: flex !important;
+}
+
+.editor-full .tox .tox-menubar .tox-mbtn:last-child {
+    margin-left: auto;
+}
+
+.editor-full .tox-toolbar__primary .tox-toolbar__group:first-child[aria-label] {
+    position: absolute;
+    right: 0;
+}
+
+/*
+ --------------------------------------------------------------------------
   Validation
  --------------------------------------------------------------------------
 */
@@ -430,10 +465,12 @@ textarea + .error-msg {
     @apply top-auto bottom-0 mb-2 ml-2;
 }
 
-
-.tinymce + .error-msg,
-.tox-tinymce + .error-msg  {
+.editor-full .tox-tinymce + .error-msg  {
     @apply top-auto bottom-0 mb-6 ml-2;
+}
+
+.editor-minimal .tox-tinymce + .error-msg  {
+    @apply top-auto bottom-0 mb-1 ml-2;
 }
 
 *[aria-invalid="true"] {
@@ -444,7 +481,7 @@ input[aria-invalid="true"],
 select[aria-invalid="true"],
 textarea[aria-invalid="true"],
 textarea[aria-invalid="true"] + .tox-tinymce {
-    @apply border border-red-700  hover:border-red-700;
+    @apply border !border-red-700 hover:!border-red-700;
 }
 
 
