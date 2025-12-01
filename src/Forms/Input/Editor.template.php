@@ -12,11 +12,12 @@
                 try {
                     tinymce.remove('#'+element.id);
                 } catch (e) {}
-
+                 
                 tinymce.init( {...gibbonTinyMCEDefaults, ...gibbonTinyMCE<?= ucfirst($mode) ?>, ...{
                     selector: 'textarea#'+element.id,
                     height: '<?= (intval($rows ?? 2) * 18) + 40 ?>px',
                     min_height: <?= (intval($rows ?? 2) * 18) + 40 ?>,
+                    cache_suffix: '?v=' + Gibbon.config.tinymce.cacheString,
                 } });
             }
         }"

@@ -300,6 +300,7 @@ $javascriptConfig = [
         'tinymce' => [
             'locale'            => $tinyMCELocale,
             'locale_rtl'        => $session->get('i18n')['rtl'] == 'Y' ? 'rtl' : 'ltr',
+            'cacheString'       => $session->get('cacheString'),
             'valid_elements'    => $settingGateway->getSettingByScope('System', 'allowableHTML'),
             'delete_confirm'    => __('Are you sure you want to delete this item?'),
             'advanced_options'  => __('Advanced Options'),

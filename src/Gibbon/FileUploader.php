@@ -119,6 +119,7 @@ class FileUploader
         // Trim and remove excess path info
         $filename = basename($filename);
         $filename = preg_replace(static::$illegalCharactersRegex, '', $filename);
+        $filename = mb_substr($filename, 0, 40);
 
         $destinationFolder = trim($destinationFolder, '/');
 

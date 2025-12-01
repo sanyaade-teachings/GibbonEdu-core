@@ -44,7 +44,7 @@ if (isset($_SERVER['HTTP_ORIGIN'])) {
 
 // Check that a file has been passed
 if (empty($_FILES)) {
-    header("HTTP/1.1 400 Invalid inputs.");
+    header("HTTP/1.1 400 Invalid Input");
     exit;
 }
 
@@ -57,12 +57,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 reset($_FILES);
 $file = current($_FILES);
 if (is_uploaded_file($file['tmp_name'])) {
-
-    // Sanitize input
-    if (preg_match("/([^\w\s\d\-_~,;:\[\]\(\).])|([\.]{2,})/", $file['name'])) {
-        header("HTTP/1.1 400 Invalid file name.");
-        exit;
-    }
 
     // Verify extension
     $fileUploader = $container->get(FileUploader::class);
@@ -77,7 +71,7 @@ if (is_uploaded_file($file['tmp_name'])) {
         $fileUploader->setFileExtensions($fileTypes);
         $attachment = $fileUploader->uploadFromPost($file);
     } else {
-        header("HTTP/1.1 400 Invalid extension.");
+        header("HTTP/1.1 400 Invalid File Type");
         exit;
     }
 

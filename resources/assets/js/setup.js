@@ -130,7 +130,7 @@ const gibbonTinyMCEFileUpload = {
                     success(data.file_upload.value);
                     return;
                 } else {
-                    failure(Gibbon.config.tinymce.error + ": " + xhr.status);
+                    failure(Gibbon.config.tinymce.error + " " + xhr.status + ": " + xhr.statusText);
                     return;
                 }
             } catch (error) {
@@ -149,19 +149,19 @@ const gibbonTinyMCEFileUpload = {
             var json;
 
             if (xhr.status === 403) {
-                failure(Gibbon.config.tinymce.error + ": " + xhr.status);
+                failure(Gibbon.config.tinymce.error + " " + xhr.status + ": " + xhr.statusText);
                 return;
             }
 
             if (xhr.status < 200 || xhr.status >= 300) {
-                failure(Gibbon.config.tinymce.error + ": " + xhr.status);
+                failure(Gibbon.config.tinymce.error + " " + xhr.status + ": " + xhr.statusText);
                 return;
             }
 
             json = JSON.parse(xhr.responseText);
 
             if (!json || typeof json.location != "string") {
-                failure(Gibbon.config.tinymce.error + ": " + xhr.responseText);
+                failure(Gibbon.config.tinymce.error + " " + xhr.responseText);
                 return;
             }
 
@@ -169,7 +169,7 @@ const gibbonTinyMCEFileUpload = {
         };
 
         xhr.onerror = function () {
-            failure(Gibbon.config.tinymce.error + ": " + +xhr.status);
+            failure(Gibbon.config.tinymce.error + " " + xhr.status + ": " + xhr.statusText);
         };
 
         try {
@@ -285,7 +285,7 @@ const gibbonTinyMCEFull = {
     apply_source_formatting : true,
     autosave_restore_when_empty: true,
 
-    file_picker_types: 'file image media',
+    file_picker_types: 'file image',
 
     /* and here's our custom image picker*/
     file_picker_callback: (cb, value, meta) => {
