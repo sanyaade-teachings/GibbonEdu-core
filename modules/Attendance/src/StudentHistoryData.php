@@ -182,9 +182,12 @@ class StudentHistoryData
 				$mergedClassLogs = [];
 
 				foreach ($periods as $period) {
-					$ttID = $period['gibbonTTDayRowClassID'] ?? null;
+                    if ($period['attendance'] != 'Y') continue;
 
-					if ($ttID !== null && isset($logsByTT[$ttID])) {
+					$ttID = $period['gibbonTTDayRowClassID'] ?? null;
+                    $log = [];
+                    
+					if ($ttID !== null && !empty($logsByTT[$ttID])) {
 						// Real attendance log exists for this period
 						$log = $logsByTT[$ttID];
 
@@ -192,13 +195,13 @@ class StudentHistoryData
 						if (empty($log['periodName'])) {
 							$log['periodName'] = $period['periodName'];
 						}
-					} else {
+					} else if (!empty($endOfDay['type']) && stripos($endOfDay['type'], 'Present') !== false) {
 						// No attendance taken for this period: create a synthetic log
 						$log = [
 							'periodName'     => $period['periodName'],
 							'context'        => 'Class',
 							'contextName'    => $period['courseName'].'.'.$period['className'],
-							'type'           => 'Not Taken',
+							'type'           => __('Not Available'),
 							'reason'         => '',
 							'status'         => 'notTaken',
 							'statusClass'    => 'dull', // grey background
@@ -210,7 +213,7 @@ class StudentHistoryData
 				}
 
 				// Replace classLogs for this day with the merged list
-				$classLogs[$dateYmd] = $mergedClassLogs;
+				$classLogs[$dateYmd] = array_filter($mergedClassLogs);
 
                 // Handle cases where school-wide attendance does not exist, but class attendance does
                 if (empty($endOfDay) && !empty($classLogs)) {

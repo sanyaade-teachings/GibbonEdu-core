@@ -173,6 +173,7 @@ class TimetableDayDateGateway extends QueryableGateway
 				'gibbonTTColumnRow.timeEnd',
 				'gibbonCourseClass.nameShort AS className',
 				'gibbonCourse.nameShort AS courseName',
+                'gibbonCourseClass.attendance',
 			])
 			->innerJoin('gibbonTTDay', 
 				'gibbonTTDay.gibbonTTDayID = gibbonTTDayRowClass.gibbonTTDayID')
@@ -191,6 +192,7 @@ class TimetableDayDateGateway extends QueryableGateway
 			->where('gibbonCourse.gibbonSchoolYearID = :gibbonSchoolYearID')
 			->bindValue('gibbonSchoolYearID', $gibbonSchoolYearID)
 			->where('gibbonCourseClassPerson.gibbonPersonID = :gibbonPersonID')
+			->where('gibbonCourseClassPerson.role = "Student"')
 			->bindValue('gibbonPersonID', $gibbonPersonID)
 			->where('gibbonTTDayDate.date = :date')
 			->bindValue('date', $date)
