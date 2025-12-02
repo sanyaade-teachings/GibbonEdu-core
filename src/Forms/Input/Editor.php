@@ -52,15 +52,26 @@ class Editor extends Input
     }
 
     /**
-     * Sets the TinyMCE editor display mode.
-     * Options: full, inline, minimal
+     * Sets the TinyMCE editor display mode to minimal.
      *
      * @param string $mode
      * @return self
      */
-    public function setMode(string $mode) : Editor
+    public function minimalMode() : Editor
     {
-        $this->mode = $mode;
+        $this->mode = 'minimal';
+        return $this;
+    }
+
+    /**
+     * Sets the TinyMCE editor display mode to inline.
+     *
+     * @param string $mode
+     * @return self
+     */
+    public function inlineMode() : Editor
+    {
+        $this->mode = 'inline';
         return $this;
     }
 
