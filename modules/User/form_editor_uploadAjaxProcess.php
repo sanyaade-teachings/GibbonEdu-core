@@ -60,7 +60,7 @@ if (is_uploaded_file($file['tmp_name'])) {
 
     // Verify extension
     $fileUploader = $container->get(FileUploader::class);
-    $fileTypes = $fileUploader->getFileExtensions('Document');
+    $fileTypes = $fileUploader->getFileExtensions(['Document', 'Spreadsheet', 'Presentation', 'Graphics/Design']);
     $imageTypes = $fileUploader->getFileExtensions('Graphics/Design');
     $fileExtension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
 

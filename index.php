@@ -289,6 +289,13 @@ if (!empty($localeCode)) {
     }
 }
 
+// Load file types once and cache in the session
+if (!$session->exists('fileUploadTypes')) {
+    $fileTypes = $container->get(Gibbon\FileUploader::class)->getFileExtensions(['Document', 'Spreadsheet', 'Presentation', 'Graphics/Design']);
+    sort($fileTypes, SORT_ASC);
+    $session->set('fileUploadTypes', implode(', ', $fileTypes));
+}
+
 /**
  * JAVASCRIPT
  *
@@ -300,16 +307,18 @@ $javascriptConfig = [
         'tinymce' => [
             'locale'            => $tinyMCELocale,
             'locale_rtl'        => $session->get('i18n')['rtl'] == 'Y' ? 'rtl' : 'ltr',
-            'cacheString'       => $session->get('cacheString'),
+            'cache_string'      => $session->get('cacheString'),
             'valid_elements'    => $settingGateway->getSettingByScope('System', 'allowableHTML'),
+            'file_types'        => $session->get('fileUploadTypes'),
+            'file_types_label'  => __('Supported file types'),
             'delete_confirm'    => __('Are you sure you want to delete this item?'),
             'advanced_options'  => __('Advanced Options'),
             'select_file_label' => __('Enter a URL or select a file'),
             'select_file'       => __('Select File'),
-            'upload_file'       => __('Upload File'),
+            'insert_file'       => __('Insert File'),
             'invalid_file'      => __('Invalid File Type'),
             'uploading'         => __('Uploading'),
-            'upload'            => __('Upload'),
+            'save'              => __('Save'),
             'download'          => __('Download'),
             'cancel'            => __('Cancel'),
             'delete'            => __('Delete'),

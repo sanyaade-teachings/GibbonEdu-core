@@ -76,7 +76,7 @@ class FileUploader
      * Internal hard-coded string of characters that should be removed from filenames.
      * @var  array
      */
-    protected static $illegalCharactersRegex = '/[\\\~`!@%#\$%\^&\*\(\)\+=\{\}\[\]\|\:;"\'<>,\?\\/]/';
+    protected static $illegalCharactersRegex = '/[\\\~`!@%#\$%\^&\*\(\)\+=\{\}\[\]\|\:;"\'<>,\?\\/\s]/';
 
     /**
      * @version  v14
@@ -119,7 +119,6 @@ class FileUploader
         // Trim and remove excess path info
         $filename = basename($filename);
         $filename = preg_replace(static::$illegalCharactersRegex, '', $filename);
-        $filename = mb_substr($filename, 0, 40);
 
         $destinationFolder = trim($destinationFolder, '/');
 
@@ -470,6 +469,7 @@ class FileUploader
 
         $name = mb_substr($filename, 0, mb_strrpos($filename, '.'));
         $name = preg_replace(static::$illegalCharactersRegex, '', $name);
+        $name = mb_substr($name, 0, 40);
 
         // Use password policy to generate random string
         $randStrGenerator = new PasswordPolicy(true, true, false, 16);
@@ -505,6 +505,7 @@ class FileUploader
 
             if (!empty($type)) {
                 $type = (is_array($type))? implode(',', $type) : $type;
+                $type = preg_replace('/[^a-zA-Z\-\_\/\s\,]/', '', $type);
 
                 $data = array('types' => strtolower($type));
                 $sql = "SELECT LOWER(extension) FROM gibbonFileExtension WHERE FIND_IN_SET(LOWER(type), :types) ORDER BY type, name";

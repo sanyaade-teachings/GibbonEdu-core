@@ -17,7 +17,7 @@
                     selector: 'textarea#'+element.id,
                     height: '<?= (intval($rows ?? 2) * 18) + 40 ?>px',
                     min_height: <?= (intval($rows ?? 2) * 18) + 40 ?>,
-                    cache_suffix: '?v=' + Gibbon.config.tinymce.cacheString,
+                    cache_suffix: '?v=' + Gibbon.config.tinymce.cache_string,
                 } });
             }
         }"

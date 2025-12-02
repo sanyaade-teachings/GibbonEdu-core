@@ -62,7 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
  * Gibbon.config.tinymce from index.php.
  */
 const gibbonTinyMCEFileUpload = {
-    title: Gibbon.config.tinymce.upload_file,
+    title: Gibbon.config.tinymce.insert_file,
     body: {
         type: "panel",
         items: [
@@ -72,6 +72,10 @@ const gibbonTinyMCEFileUpload = {
                 filetype: "file",
                 label: Gibbon.config.tinymce.select_file_label,
                 picker_text: Gibbon.config.tinymce.select_file,
+            },
+            {
+                type: "htmlpanel",
+                html: `<span style="font-size: 0.75rem; color: #888; display: inline-block; margin-top: 1rem;">${Gibbon.config.tinymce.file_types_label}: ${Gibbon.config.tinymce.file_types}</span>`,
             },
         ],
     },
@@ -84,7 +88,7 @@ const gibbonTinyMCEFileUpload = {
         {
             type: "submit",
             name: "submitButton",
-            text: Gibbon.config.tinymce.upload,
+            text: Gibbon.config.tinymce.save,
             buttonType: "primary",
         },
     ],
@@ -100,11 +104,10 @@ const gibbonTinyMCEFileUpload = {
         const notification = tinymce.activeEditor.notificationManager.open({ text: Gibbon.config.tinymce.uploading, progressBar: true });
         tinymce.activeEditor.setProgressState(true);
 
-        const success = function (location) {
-            const filename = location.split('/').pop();
+        const success = function (location, title) {
             tinymce.activeEditor.setProgressState(false);
             tinymce.activeEditor.notificationManager.close();
-            tinymce.activeEditor.execCommand("mceInsertContent", false, `<p><a href="${location}" data-fileupload="${data.file_upload.meta.title ?? location}">${data.file_upload.meta.title ?? filename}</a></p>`);
+            tinymce.activeEditor.execCommand("mceInsertContent", false, `<p><a href="${location}" data-fileupload="${title ?? location}">${title ?? location}</a></p>`);
 
             api.close();
         };
@@ -122,21 +125,8 @@ const gibbonTinyMCEFileUpload = {
 
         // If a value is provided, check that it exists
         if (!data.file_upload.meta.title) {
-            try {
-                xhr.open('HEAD', data.file_upload.value, false); 
-                xhr.send(null);
-
-                if (xhr.status === 200) {
-                    success(data.file_upload.value);
-                    return;
-                } else {
-                    failure(Gibbon.config.tinymce.error + " " + xhr.status + ": " + xhr.statusText);
-                    return;
-                }
-            } catch (error) {
-                failure(Gibbon.config.tinymce.error + ": " + error);
-                return;
-            }
+            success(data.file_upload.value);
+            return;
         }
         
         xhr.open("POST", "./modules/User/form_editor_uploadAjaxProcess.php");
@@ -165,7 +155,7 @@ const gibbonTinyMCEFileUpload = {
                 return;
             }
 
-            success(json.location);
+            success(json.location, data.file_upload.meta.title);
         };
 
         xhr.onerror = function () {
@@ -355,7 +345,7 @@ const gibbonTinyMCEFull = {
 
         editor.ui.registry.addButton('fileupload', {
             icon: 'new-document',
-            tooltip: Gibbon.config.tinymce.upload_file,
+            tooltip: Gibbon.config.tinymce.insert_file,
             onAction: () => editor.windowManager.open(gibbonTinyMCEFileUpload)
         });
 
@@ -406,7 +396,6 @@ const gibbonTinyMCEFull = {
                       type: "contextformbutton",
                       icon: "new-tab",
                       tooltip: Gibbon.config.tinymce.open,
-                      primary: true,
                       onAction: (formApi) => {
                           const elm = getFileLinkElement();
                           window.open(elm.href, "_blank");
