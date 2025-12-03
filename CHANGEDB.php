@@ -401,6 +401,11 @@ ALTER TABLE `gibbonCalendarEventType` CHANGE `color` `color` VARCHAR(7) NULL, CH
 
 ";
 
+//v30.0.01
+++$count;
+$sql[$count][0] = '30.0.01';
+$sql[$count][1] = "";
+
 //v31.0.00
 ++$count;
 $sql[$count][0] = '31.0.00';
