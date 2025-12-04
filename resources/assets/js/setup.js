@@ -19,7 +19,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 document.addEventListener("DOMContentLoaded", () => {
-
     htmx.onLoad(function (content) {
         
         // Initialize all legacy Thickbox links as HTMX AJAX calls
@@ -47,12 +46,19 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         $(document).trigger('gibbon-setup');
-
-        // Initialize latex
-        $(".latex").latex();
     });
 
 });
+
+/**
+ * Clear templated nodes from the document before saving it in history. This
+ * prevents Alpine from creating duplicate objects when the history is loaded.
+ */
+document.addEventListener('htmx:beforeHistorySave', (event) => {
+    document.querySelectorAll('[x-from-template]').forEach((e) => e.remove());
+    document.querySelectorAll('.tox-tinymce').forEach((e) => e.remove());
+});
+
 
 /**
  * TinyMCE

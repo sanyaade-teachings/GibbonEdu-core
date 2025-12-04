@@ -24,24 +24,13 @@ namespace Gibbon\Forms\Input;
 use Gibbon\View\Component;
 
 /**
- * Person
+ * SearchSelect (Combobox)
  *
  * @version v31
- * @since   v18
+ * @since   v31
  */
-class Person extends SearchSelect
+class SearchSelect extends Select
 {
-    protected $displayPhoto = true;
-    protected $size = 'large';
-
-    public function photo($value, $size = 'large')
-    {
-        $this->displayPhoto = $value;
-        $this->size = $size;
-
-        return $this;
-    }
-
     /**
      * Gets the HTML output for this form element.
      * @return  string
@@ -53,7 +42,7 @@ class Person extends SearchSelect
         }
 
         $this->processOutput();
-
+        
         $this->setValue($this->selected);
 
         $options = [];
@@ -63,9 +52,11 @@ class Person extends SearchSelect
                 $optGroup = is_array($items) ? $items : [$key => $items];
 
                 foreach ($optGroup as $value => $label) {
-                    $options[$value] = [
+                    $options[$optLabel][$value] = [
                         'value' => $value,
                         'label' => $label,
+                        'selected' => $this->isOptionSelected($value) ? 'selected' : '',
+                        'class' => !empty($this->chainedToValues[$value]) ? $this->chainedToValues[$value] : '',
                     ];
                 }
             }
@@ -73,11 +64,15 @@ class Person extends SearchSelect
 
         $selected = is_array($this->selected)? ($this->selected[0] ?? '') : $this->selected;
 
-        return Component::render(Person::class, $this->getAttributeArray() + [
-            'groupClass'  => $this->getGroupClass(),
-            'placeholder' => $this->placeholder,
-            'options'     => array_values($options),
-            'selected'    => $selected,
+        return Component::render(SearchSelect::class, $this->getAttributeArray() + [
+            'outerClass'    => $this->getOuterClass(),
+            'groupClass'    => $this->getGroupClass(),
+            'placeholder'   => $this->placeholder,
+            'chainedToID'   => $this->chainedToID,
+            'options'       => $options,
+            'selected'      => $selected,
+            'selectedLabel' => $options[$selected]['label'] ?? '',
+            'validation'    => '',
         ]);
     }
 }
