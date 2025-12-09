@@ -33,7 +33,7 @@ class Editor extends Input
 {
     protected $mode = 'full';
     protected $tinymceInit = true;
-    protected $rows = 20;
+    protected $rows = 6;
     protected $showMedia = false;
     protected $initiallyHidden = false;
     protected $allowUpload = true;
@@ -165,6 +165,13 @@ class Editor extends Input
         return $this;
     }
 
+    protected function getMinHeight()
+    {
+        return $this->mode == 'minimal'
+            ? (intval($this->rows ?? 2) * 20) + 39
+            : (intval($this->rows ?? 2) * 20) + 110;
+    }
+
     /**
      * Gets the HTML output for this form element.
      * @return  string
@@ -177,6 +184,7 @@ class Editor extends Input
             'rows'                  => $this->rows,
             'showMedia'             => $this->showMedia,
             'required'              => $this->getRequired(),
+            'minHeight'             => $this->getMinHeight(),
             'allowUpload'           => $this->allowUpload,
             'onKeyDownSubmitUrl'    => $this->onKeyDownSubmitUrl,
             'onKeyDownSubmitFormId' => $this->onKeyDownSubmitFormId,
