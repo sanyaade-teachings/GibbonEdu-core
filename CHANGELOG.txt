@@ -37,6 +37,7 @@ v31.0.00
         User Admin: linked user names to Student and Staff profiles in Manage Users
 
     Bug Fixes
+        School Admin: fixed inactive grade scales not selectable in Manage External Assessment 
 
     Deprecations
 

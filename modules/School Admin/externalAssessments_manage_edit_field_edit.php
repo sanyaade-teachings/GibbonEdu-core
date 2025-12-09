@@ -73,7 +73,7 @@ if (isActionAccessible($guid, $connection2, '/modules/School Admin/externalAsses
                 $row->addLabel('order', __('Order'))->description(__('Order in which fields appear within category<br/>Should be unique for this category.'));
                 $row->addNumber('order')->required()->maxLength(4);
 
-            $results = $container->get(GradeScaleGateway::class)->selectActiveGradeScales();
+            $results = $container->get(GradeScaleGateway::class)->selectAllGradeScales();
             $row = $form->addRow();
                 $row->addLabel('gibbonScaleID', __('Grade Scale'))->description(__('Grade scale used to control values that can be assigned.'));
                 $row->addSearchSelect('gibbonScaleID')->fromResults($results)->required()->placeholder();
