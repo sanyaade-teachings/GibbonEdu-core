@@ -165,7 +165,7 @@ class StudentHistoryData
 			
 				// Get all timetable periods for this student on this date, augment classLogs with timetable periods (including missing attendance)
 				$periods = $this->timetableGateway
-					->selectTimetablePeriodsByPersonAndDate($gibbonSchoolYearID, $gibbonPersonID, $dateYmd)
+					->selectTimetablePeriodsByPersonAndDate($gibbonSchoolYearID, $gibbonPersonID, $dateYmd, $dateYmd)
 					->fetchAll();
 
 				// Existing class logs for this day (may be empty)
