@@ -245,7 +245,7 @@ const gibbonTinyMCEInline = {
 const gibbonTinyMCEFull = {
     statusbar: true,
     menubar : 'file edit view insert format table html',
-    contextmenu: 'cut copy paste pastetext | searchreplace | link | table | removeformat | code preview ',
+    contextmenu: false,  //'cut copy paste pastetext | searchreplace | link | table | removeformat | code preview ',
     plugins: 'autosave table lists link image media quickbars wordcount charmap fullscreen code preview searchreplace',
     
     menu: {
