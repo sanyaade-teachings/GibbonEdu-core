@@ -34,6 +34,7 @@ v31.0.00
         Admissions: added a progress bar for admissions milestones to Manage Applications
         Admissions: added a warning to Accept Application when milestones have not been completed
         Attendance: student attendance history now ordered by timetable period
+        Calendar: switched default sorting of Manage Events to newest first
         User Admin: linked user names to Student and Staff profiles in Manage Users
 
     Bug Fixes
