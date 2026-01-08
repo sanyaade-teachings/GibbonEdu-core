@@ -38,6 +38,7 @@ v31.0.00
 
     Bug Fixes
         School Admin: fixed inactive grade scales not selectable in Manage External Assessment 
+        Messenger: fixed overflowing images and iframes on Message Wall
 
     Deprecations
 
