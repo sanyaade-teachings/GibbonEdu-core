@@ -38,8 +38,9 @@ v31.0.00
         User Admin: linked user names to Student and Staff profiles in Manage Users
 
     Bug Fixes
-        School Admin: fixed inactive grade scales not selectable in Manage External Assessment 
         Messenger: fixed overflowing images and iframes on Message Wall
+        Staff: fixed staff coverage showing on timetable when not accepted yet or declined
+        School Admin: fixed inactive grade scales not selectable in Manage External Assessment 
 
     Deprecations
 
