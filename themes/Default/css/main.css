@@ -1030,6 +1030,15 @@ table.smallIntBorder td.noPadding {
     color: white;
 }
 
+#messages iframe {
+    max-width: 100%;
+}
+
+#messages img {
+    max-width: 100%;
+    height: auto;
+}
+
 .body-gradient-purple {
     background: linear-gradient(to left top, #402568 2%, #935ee1 65%, #a871ec) no-repeat fixed;
 }

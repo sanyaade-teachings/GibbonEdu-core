@@ -24,11 +24,3 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
     font-size: 13px;
 }
 
-#messages iframe {
-    max-width: 100%;
-}
-
-#messages img {
-    max-width: 100%;
-    height: auto;
-}
