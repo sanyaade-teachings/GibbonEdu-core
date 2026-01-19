@@ -531,7 +531,12 @@ class AttendanceLogPersonGateway extends QueryableGateway
         $datesList = is_array($datesList) ? implode(',', $datesList) : $datesList;
 
         $data = ['datesList' => $datesList, 'gibbonSchoolYearID' => $gibbonSchoolYearID, 'threshold' => $threshold];
-        $sql = "SELECT gibbonPerson.gibbonPersonID, gibbonPerson.surname, gibbonPerson.preferredName, gibbonFormGroup.nameShort AS formGroup FROM gibbonPerson INNER JOIN gibbonStudentEnrolment ON gibbonStudentEnrolment.gibbonPersonID = gibbonPerson.gibbonPersonID INNER JOIN gibbonFormGroup ON gibbonFormGroup.gibbonFormGroupID = gibbonStudentEnrolment.gibbonFormGroupID WHERE gibbonStudentEnrolment.gibbonSchoolYearID = :gibbonSchoolYearID AND gibbonPerson.status = 'Full' AND gibbonPerson.gibbonPersonID IN (
+        $sql = "SELECT gibbonPerson.gibbonPersonID, gibbonPerson.surname, gibbonPerson.preferredName, gibbonFormGroup.nameShort AS formGroup,  gibbonFormGroup.gibbonFormGroupID, gibbonYearGroup.gibbonYearGroupID
+        FROM gibbonPerson 
+        INNER JOIN gibbonStudentEnrolment ON (gibbonStudentEnrolment.gibbonPersonID = gibbonPerson.gibbonPersonID) 
+        INNER JOIN gibbonFormGroup ON (gibbonFormGroup.gibbonFormGroupID = gibbonStudentEnrolment.gibbonFormGroupID) 
+        INNER JOIN gibbonYearGroup ON (gibbonYearGroup.gibbonYearGroupID = gibbonStudentEnrolment.gibbonYearGroupID) 
+        WHERE gibbonStudentEnrolment.gibbonSchoolYearID = :gibbonSchoolYearID AND gibbonPerson.status = 'Full' AND gibbonPerson.gibbonPersonID IN (
         SELECT gibbonAttendanceLogPerson.gibbonPersonID
         FROM gibbonAttendanceLogPerson
         WHERE FIND_IN_SET (gibbonAttendanceLogPerson.date, :datesList)

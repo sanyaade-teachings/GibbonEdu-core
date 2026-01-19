@@ -26,6 +26,7 @@ use Gibbon\Comms\NotificationSender;
 use Gibbon\Domain\System\SettingGateway;
 use Gibbon\Domain\System\NotificationGateway;
 use Gibbon\Domain\Attendance\AttendanceLogPersonGateway;
+use Gibbon\Domain\School\YearGroupGateway;
 
 require getcwd().'/../gibbon.php';
 
@@ -66,6 +67,7 @@ if ((empty($schoolDays)) ) {
     return;
 }
 
+$yearGroupGateway = $container->get(YearGroupGateway::class);
 $absentStudents = $container->get(AttendanceLogPersonGateway::class)->selectConsecutiveAbsencesByPersonAndDates($schoolDays, $session->get('gibbonSchoolYearID'), $threshold);
 
 if (empty($absentStudents)) {
@@ -87,6 +89,10 @@ if ($event->getEventDetails($notificationGateway, 'active') == 'Y') {
             $studentName = $row['surname']. ', ' . $row['preferredName'] . ' - ' . $row['formGroup'];
             $url = Url::fromModuleRoute('Attendance', 'report_studentHistory.php')->withQueryParams(['gibbonPersonID' => $row['gibbonPersonID']]);
             $studentsList[] = Format::link($url, $studentName);
+
+            // Add Head of Year as an automatic recipient
+            $yearGroup = $yearGroupGateway->getByID($row['gibbonYearGroupID']);
+            $event->addRecipient($yearGroup['gibbonPersonIDHOY']);
         }
     }
 }
