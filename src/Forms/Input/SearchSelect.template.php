@@ -1,4 +1,4 @@
-<div x-data="{
+<div id="<?= $id ?>SearchSelect" x-data="{
         allOptions: [],
         options: [],
         search: '',

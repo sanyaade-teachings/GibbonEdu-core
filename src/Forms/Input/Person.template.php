@@ -1,4 +1,4 @@
-<div x-data="{
+<div id="<?= $id ?>PersonSelect" x-data="{
         allOptions: [],
         options: [],
         search: '',
@@ -28,6 +28,7 @@
         clearSelectedOption() {
             this.selectedOption = null;
             this.$refs.hiddenInput.value = null;
+            this.$refs.hiddenInput.dispatchEvent(new Event('change', { bubbles: true }));
             this.$refs.searchSelect.blur();
             this.$refs.personPhoto.src = '';
         },
