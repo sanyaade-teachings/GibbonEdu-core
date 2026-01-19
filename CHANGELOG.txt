@@ -23,7 +23,9 @@ v31.0.00
 --------
 
     Headlines
-        Improved text editing with drag-drop image uploads and more formatting options
+        Form fields have been improved with searchable select boxes
+        Smart blocks have been updated with a streamlined appearance and more tools
+        Improved text editor with drag-drop image uploads and more formatting options
 
     Security
 
@@ -37,13 +39,14 @@ v31.0.00
         Calendar: switched default sorting of Manage Events to newest first
         Library: updated automatic shelf lists so that lists are queried dynamically in Browse Library
         Library: added the option to edit the category and sub-category for an automatic shelf
+        Planner: improved the Deploy Unit page with a drag-drop interface and new tools
         Reports: added error detection while editing twig templates
-        System Admin: added a validation to check for error in email twig templates
         Staff: updated the staff absence message for partial day absence
+        Staff: fixed the issue to allow editing coverage request
+        System Admin: added a validation to check for error in email twig templates
         User Admin: linked user names to Student and Staff profiles in Manage Users
         User Admin: fixed the bug to display user's personal address if turned on
         User Admin: fix the bug to display user's personal address if turned on
-        Staff: fixed the issue to allow editing coverage request
 
     Bug Fixes
         School Admin: fixed inactive grade scales not selectable in Manage External Assessment
