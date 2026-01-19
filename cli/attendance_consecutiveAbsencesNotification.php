@@ -91,6 +91,9 @@ if ($event->getEventDetails($notificationGateway, 'active') == 'Y') {
     }
 }
 
+// Don't send if there are no students absent
+if (empty($studentsList)) return;
+
 $event->setNotificationText(__('The following students have been consecutively absent for the last 3 or more school days (including today)').'<br/></br>'.Format::list($studentsList));
 $event->setActionLink('/index.php?q=/modules/Attendance/report_consecutiveAbsences.php&numberOfSchoolDays='.$threshold);
 
