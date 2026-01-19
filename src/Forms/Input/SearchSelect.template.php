@@ -20,7 +20,7 @@
                             group.options.push(option);
                         });
 
-                    this.selectedOption = group.options.find(element => element.value == this.selectedValue);
+                    this.selectedOption = group.options.find(element => element.value == this.selectedValue) ?? this.selectedOption;
                     this.allOptions.push(group);
                 }
             );
@@ -102,7 +102,7 @@
                 <optgroup label="<?= $group ?>">
 
                 <?php foreach ($optionList as $option)  { ?>
-                <option value="<?= $option['value'] ?>" <?= $option['value'] == $selected? 'selected' : '' ?> ><?= $option['label'] ?></option>
+                <option value="<?= $option['value'] ?>" <?= $option['value'] == $selected? 'selected' : '' ?>  ><?= $option['label'] ?></option>
                 <?php } ?>
 
                 </optgroup>
@@ -111,7 +111,7 @@
 
             
         </select>
-        
+
         <div x-cloak x-show="isOpen || openedWithKeyboard" id="<?= $id ?>List" class="absolute top-0 left-0 z-50 w-full min-w-52 rounded-md bg-white " role="listbox" aria-label="list" x-on:click.outside="toggleSelect(false); openedWithKeyboard = false" x-on:keydown.down.prevent="$focus.wrap().next()" x-on:keydown.up.prevent="$focus.wrap().previous()" x-transition:enter.opacity.duration.75ms x-transition:leave.opacity.duration.0ms x-trap="openedWithKeyboard"
         style="display:none;">
 
