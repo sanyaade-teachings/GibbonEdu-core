@@ -103,7 +103,7 @@
             });
         }
     }"
-    x-init="blocks = blockData<?= $id ?>; blockCount = blocks.length; predefined = predefinedData<?= $id ?>;"
+    x-init="blocks = blockData<?= $id ?>; blockCount = blocks.length; predefined = predefinedData<?= $id ?>; <?= !empty($expanded) ? 'showHide(true);' : '' ?>"
     @add-blocks="handleBlockAdd(event.detail)"
     @remove-blocks="handleBlockRemove(event.detail)"
 >

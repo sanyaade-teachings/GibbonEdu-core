@@ -253,6 +253,7 @@ class CustomBlocks implements OutputableInterface
             'blockCount'       => count($blocks),
             'predefinedBlocks' => $this->settings['predefinedBlocks'] ?? [],
             'sortable'         => $this->settings['sortable'] ?? true,
+            'expanded'         => $this->settings['expanded'] ?? false,
             'sortGroup'        => $this->settings['sortGroup'] ?? $this->name,
             'placeholder'      => $this->settings['placeholder'] ?? '',
             'deleteMessage'    => $this->settings['deleteMessage'],
