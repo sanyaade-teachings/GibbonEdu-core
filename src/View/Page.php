@@ -268,7 +268,7 @@ class Page extends View
      */
     public function getBlankSlate(string $text = null)
     {
-        return Format::alert($text ?? __('There are no records to display.'), 'message');
+        return Format::alert($text ?? __('There are no records to display.'), 'empty');
     }
 
     /**
