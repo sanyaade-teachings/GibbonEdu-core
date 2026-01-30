@@ -43,7 +43,9 @@
             block.show = showBlock;
             this.blocks.push(block);
 
-            //$nextTick(() => { this.showHideBlock(block, showBlock);  });
+            if (showBlock) {
+                $nextTick(() => { this.showHideBlock(block, showBlock);  });
+            }
 
             this.blockCount = this.blocks.length;
             indexNext<?= $sortGroup ?>++;
