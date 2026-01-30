@@ -68,7 +68,7 @@ if ((empty($schoolDays)) ) {
 }
 
 $yearGroupGateway = $container->get(YearGroupGateway::class);
-$absentStudents = $container->get(AttendanceLogPersonGateway::class)->selectConsecutiveAbsencesByPersonAndDates($schoolDays, $session->get('gibbonSchoolYearID'), $threshold);
+$absentStudents = $container->get(AttendanceLogPersonGateway::class)->selectConsecutiveAbsencesByDates($schoolDays, $session->get('gibbonSchoolYearID'), $threshold);
 
 if (empty($absentStudents)) {
     print __("No absent students found.") ;
@@ -87,7 +87,7 @@ if ($event->getEventDetails($notificationGateway, 'active') == 'Y') {
     if ($absentStudents->rowCount() > 0) {
         while ($row = $absentStudents->fetch()) { // For every staff
             $studentName = $row['surname']. ', ' . $row['preferredName'] . ' - ' . $row['formGroup'];
-            $url = Url::fromModuleRoute('Attendance', 'report_studentHistory.php')->withQueryParams(['gibbonPersonID' => $row['gibbonPersonID']]);
+            $url = Url::fromModuleRoute('Attendance', 'report_studentHistory.php')->withQueryParams(['gibbonPersonID' => $row['gibbonPersonID']])->withAbsoluteUrl();
             $studentsList[] = Format::link($url, $studentName);
 
             // Add Head of Year as an automatic recipient
