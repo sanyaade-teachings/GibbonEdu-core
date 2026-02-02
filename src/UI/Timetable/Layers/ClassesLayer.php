@@ -207,7 +207,7 @@ class ClassesLayer extends AbstractTimetableLayer
                     $item->set('primaryAction', [
                         'name'      => 'add',
                         'label'     => __('Add lesson plan'),
-                        'url'       => Url::fromModuleRoute('Planner', 'planner_add')->withQueryParams(['viewBy' => 'class', 'gibbonCourseClassID' => $class['gibbonCourseClassID'], 'date' => $class['date'], 'timeStart' => $class['timeStart'], 'timeEnd' => $class['timeEnd']]),
+                        'url'       => Url::fromModuleRoute('Planner', 'planner_add')->withQueryParams(['viewBy' => 'class', 'gibbonCourseClassID' => $class['gibbonCourseClassID'], 'date' => $class['date'], 'timeStart' => $class['timeStart'], 'timeEnd' => $class['timeEnd'], 'gibbonTTDayRowClassID' => $class['gibbonTTDayRowClassID']]),
                         'icon'      => 'add',
                         'iconClass' => 'text-gray-600 hover:text-gray-800',
                     ]);
