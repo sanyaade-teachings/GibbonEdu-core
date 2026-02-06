@@ -259,9 +259,9 @@ if ($proceed == false) {
                                         'external' => true,
                                     ],
                                 ]);
-                                if ($mail->Send()) {
-                                    $mail->ClearAllRecipients();
-                                }
+
+                                $mail->Send();
+                                $mail->ClearAllRecipients();
                             }
 
                             if (!empty($referenceEmail2)) {
@@ -278,9 +278,8 @@ if ($proceed == false) {
                                     ],
                                 ]);
 
-                                if ($mail->Send()) {
-                                    $mail->ClearAllRecipients();
-                                }
+                                $mail->Send();
+                                $mail->ClearAllRecipients();
                             }
                         }
 
@@ -308,9 +307,8 @@ if ($proceed == false) {
                             'body'   => $body,
                         ]);
 
-                        if ($mail->Send()) {
-                            $mail->ClearAllRecipients();
-                        }
+                        $mail->Send();
+                        $mail->ClearAllRecipients();
                     }
                 }
             }
