@@ -460,7 +460,7 @@ class FormFactory implements FormFactoryInterface
         $languages = array(
             'af_ZA' => 'Afrikaans - Suid-Afrika',
             'nl_NL' => 'Dutch - Nederland',
-            'ca_CA' => 'Català - Catalonia',
+            'ca_ES' => 'Català - Catalonia',
             'en_GB' => 'English - United Kingdom',
             'en_US' => 'English - United States',
             'es_ES' => 'Español - España',
