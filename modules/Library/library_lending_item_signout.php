@@ -162,7 +162,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Library/library_lending_it
 
             $row = $form->addRow();
                 $row->addLabel('gibbonPersonIDReturnAction', __('Responsible User'))->description(__('Who will be responsible for the future status?'));
-                $row->addSelectUsers('gibbonPersonIDReturnAction', $session->get('gibbonSchoolYearID'), ['includeStudents' => true, 'includeStaff' => true])->placeholder()->required();
+                $row->addSelectUsers('gibbonPersonIDReturnAction', $session->get('gibbonSchoolYearID'), ['includeStudents' => true, 'includeStaff' => true])->placeholder();
 
 
             $row = $form->addRow();
