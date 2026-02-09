@@ -354,8 +354,8 @@ if (isActionAccessible($guid, $connection2, '/modules/Activities/activities_mana
                 $(document).ready(function () {
 
                     $('input[id^=fileUpload][name^=photos]').each(function() {
-                        
-                        var filePath = $('input[id^=filePath]', $(this).parent());
+                        var inputName = this.name.replace('fileUpload', 'filePath');
+                        var filePath = $('input[name="'+inputName+'"]');
                         if (filePath != undefined) {
                             var img = document.createElement("img");
                             img.src = "<?php echo $session->get('absoluteURL'); ?>/"+filePath.val();
