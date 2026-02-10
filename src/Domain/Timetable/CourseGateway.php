@@ -202,7 +202,7 @@ class CourseGateway extends QueryableGateway
                 ORDER BY gibbonCourse.nameShort";
 
         return $this->db()->select($sql, $data);
-    }
+    }    
 
     public function getCourseClassDetails($gibbonCourseClassID)
     {
@@ -257,7 +257,7 @@ class CourseGateway extends QueryableGateway
 
         return $this->db()->select($sql, $data);
     }
-
+      
     public function selectCourseListBySchoolYearAndPerson($gibbonSchoolYearID, $gibbonPersonID )
     {
         $data = ['gibbonSchoolYearID' => $gibbonSchoolYearID, 'gibbonPersonID' => $gibbonPersonID];
@@ -328,7 +328,7 @@ class CourseGateway extends QueryableGateway
     {
         $data = ['gibbonSchoolYearID' => $gibbonSchoolYearID, 'gibbonPersonID' => $gibbonPersonID];
         $sql = "SELECT gibbonCourseClass.gibbonCourseClassID as value, CONCAT(gibbonCourse.nameShort, '.', gibbonCourseClass.nameShort) as name FROM gibbonCourse JOIN gibbonCourseClass ON (gibbonCourseClass.gibbonCourseID=gibbonCourse.gibbonCourseID) JOIN gibbonCourseClassPerson ON (gibbonCourseClassPerson.gibbonCourseClassID=gibbonCourseClass.gibbonCourseClassID) WHERE gibbonPersonID=:gibbonPersonID AND gibbonSchoolYearID=:gibbonSchoolYearID AND NOT role LIKE '%- Left' ORDER BY gibbonCourseClass.name";
-
+        
         return $this->db()->select($sql, $data);
     }
 }
