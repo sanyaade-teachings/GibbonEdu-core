@@ -730,12 +730,6 @@ require_once __DIR__ . '/src/MarkbookColumn.php';
                     $rowEntry = $pdo->selectOne($sqlEntry, $dataEntry);
                     $rowWork = [];
 
-                    if ($column->displaySubmission()) {
-                        $dataWork = array('gibbonPlannerEntryID' => $column->getData('gibbonPlannerEntryID'), 'gibbonPersonID' => $rowStudents['gibbonPersonID']);
-                        $sqlWork = 'SELECT * FROM gibbonPlannerEntryHomework WHERE gibbonPlannerEntryID=:gibbonPlannerEntryID AND gibbonPersonID=:gibbonPersonID ORDER BY count DESC';
-                        $rowWork = $pdo->selectOne($sqlWork, $dataWork);
-                    }
-
                     $newEnrollment = false;
                     
                     // Check if class enrolment date exists and is after the Go Live date for this column
@@ -904,12 +898,9 @@ require_once __DIR__ . '/src/MarkbookColumn.php';
 
                     if ($column->displaySubmission()) {
                         echo "<td class='smallColumn'>";                       
-                            $resultWork = $container->get(PlannerEntryHomeworkGateway::class)->selectHomeworkByStudent($column->getData('gibbonPlannerEntryID'), $rowStudents['gibbonPersonID']);
-
-                        if ($resultWork->rowCount() > 0) {
-                            $rowWork = $resultWork->fetch();
-                        echo "<td class='smallColumn'>";
                         
+                        $rowWork = $container->get(PlannerEntryHomeworkGateway::class)->selectHomeworkByStudent($column->getData('gibbonPlannerEntryID'), $rowStudents['gibbonPersonID']);
+
                         if (!empty($rowWork)) {
                             if ($rowWork['status'] == 'Exemption') {
                                 $linkText = __('Exe');
@@ -952,10 +943,17 @@ require_once __DIR__ . '/src/MarkbookColumn.php';
                             }
                         }
                         echo '</td>';
-
                     }
-                	echo '</tr></table>';
-                }
+
+                    echo '</tr></table>';
+                    echo '</td>';
+                    
+                
+            
+
+                    
+                    
+                
 
                 // These are the columns that show up at the end of the markbook, they must match their headers above the main loop
                 // Calculate and output weighted average marks
