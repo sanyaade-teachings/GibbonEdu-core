@@ -24,6 +24,7 @@ use Gibbon\Services\Format;
 use Gibbon\Domain\System\SettingGateway;
 use Gibbon\Domain\Students\StudentGateway;
 use Gibbon\Domain\School\SchoolYearTermGateway;
+use Gibbon\Domain\Planner\PlannerEntryHomeworkGateway;
 use Gibbon\Domain\Departments\DepartmentGateway;
 
 $page->breadcrumbs->add(__('View Markbook'));
@@ -431,13 +432,10 @@ if (empty($children)) {
                                 echo '<td>';
                                 $rowSub = $resultSub->fetch();
 
-
-                                    $dataWork = array('gibbonPlannerEntryID' => $rowEntry['gibbonPlannerEntryID'], 'gibbonPersonID' => $gibbonPersonID);
-                                    $sqlWork = 'SELECT * FROM gibbonPlannerEntryHomework WHERE gibbonPlannerEntryID=:gibbonPlannerEntryID AND gibbonPersonID=:gibbonPersonID ORDER BY count DESC';
-                                    $resultWork = $connection2->prepare($sqlWork);
-                                    $resultWork->execute($dataWork);
-                                if ($resultWork->rowCount() > 0) {
-                                    $rowWork = $resultWork->fetch();
+                                    $resultWork = $container->get(PlannerEntryHomeworkGateway::class)->selectHomeworkByStudent($rowEntry['gibbonPlannerEntryID'], $gibbonPersonID);
+                                        
+                                    if ($resultWork->rowCount() > 0) {
+                                        $rowWork = $resultWork->fetch();
 
                                     if ($rowWork['status'] == 'Exemption') {
                                         $linkText = __('Exemption');

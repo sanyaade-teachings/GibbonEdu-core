@@ -39,6 +39,7 @@ use Gibbon\Domain\System\SettingGateway;
 use Gibbon\Domain\Planner\PlannerEntryGateway;
 use Gibbon\Domain\Timetable\CourseEnrolmentGateway;
 use Gibbon\Domain\Timetable\TimetableDayDateGateway;
+use Gibbon\Domain\Planner\PlannerEntryHomeworkGateway;
 use Gibbon\Domain\School\SchoolYearSpecialDayGateway;
 use Gibbon\Domain\Attendance\AttendanceLogPersonGateway;
 use Gibbon\Domain\Attendance\AttendanceLogCourseClassGateway;
@@ -859,10 +860,9 @@ if (isActionAccessible($guid, $connection2, '/modules/Planner/planner_view_full.
 														</td>
 
 														<?php
-                                                        $dataVersion = array('gibbonPlannerEntryID' => $values['gibbonPlannerEntryID'], 'gibbonPersonID' => $rowClass['gibbonPersonID']);
-                                                        $sqlVersion = 'SELECT * FROM gibbonPlannerEntryHomework WHERE gibbonPlannerEntryID=:gibbonPlannerEntryID AND gibbonPersonID=:gibbonPersonID ORDER BY count DESC';
-                                                        $resultVersion = $connection2->prepare($sqlVersion);
-                                                        $resultVersion->execute($dataVersion);
+                                                        
+                                                        $resultVersion = $container->get(PlannerEntryHomeworkGateway::class)->selectHomeworkByStudent($values['gibbonPlannerEntryID'], $rowClass['gibbonPersonID']);
+
 													    if ($resultVersion->rowCount() < 1) {
 														?>
 															<td colspan=4>
