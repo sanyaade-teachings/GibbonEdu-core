@@ -728,10 +728,14 @@ require_once __DIR__ . '/src/MarkbookColumn.php';
                     $dataEntry = array('gibbonMarkbookColumnID' => $column->gibbonMarkbookColumnID, 'gibbonPersonIDStudent' => $rowStudents['gibbonPersonID']);
                     $sqlEntry = 'SELECT * FROM gibbonMarkbookEntry WHERE gibbonMarkbookColumnID=:gibbonMarkbookColumnID AND gibbonPersonIDStudent=:gibbonPersonIDStudent LIMIT 1';
                     $rowEntry = $pdo->selectOne($sqlEntry, $dataEntry);
+
                     $rowWork = [];
+                    if ($column->displaySubmission()) {
+                        $rowWork = $container->get(PlannerEntryHomeworkGateway::class)->selectHomeworkByStudent($column->getData('gibbonPlannerEntryID'), $rowStudents['gibbonPersonID'])->fetch();
+                    }
 
                     $newEnrollment = false;
-                    
+
                     // Check if class enrolment date exists and is after the Go Live date for this column
                     if (!empty($rowStudents['dateEnrolled']) && !empty($column->getData('completeDate')) && $rowStudents['dateEnrolled'] > $column->getData('completeDate')) {
                         $newEnrollment = true;
@@ -898,8 +902,6 @@ require_once __DIR__ . '/src/MarkbookColumn.php';
 
                     if ($column->displaySubmission()) {
                         echo "<td class='smallColumn'>";                       
-                        
-                        $rowWork = $container->get(PlannerEntryHomeworkGateway::class)->selectHomeworkByStudent($column->getData('gibbonPlannerEntryID'), $rowStudents['gibbonPersonID']);
 
                         if (!empty($rowWork)) {
                             if ($rowWork['status'] == 'Exemption') {
@@ -947,6 +949,9 @@ require_once __DIR__ . '/src/MarkbookColumn.php';
 
                     echo '</tr></table>';
                     echo '</td>';
+                }
+
+                    
                     
                 
             
@@ -1025,11 +1030,9 @@ require_once __DIR__ . '/src/MarkbookColumn.php';
                     }
                 }
 
-
-
                 echo '</tr>';
             }
-        }
+        
 
         // Class Average
         if ($markbook->getSetting('enableColumnWeighting') == 'Y' && $columnFilter != 'unmarked') {
