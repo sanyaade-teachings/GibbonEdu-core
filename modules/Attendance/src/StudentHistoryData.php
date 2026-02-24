@@ -27,6 +27,7 @@ use DateTimeImmutable;
 use Gibbon\Domain\DataSet;
 use Gibbon\Domain\System\SettingGateway;
 use Gibbon\Services\Format;
+use Gibbon\Contracts\Services\Session;
 use Gibbon\Contracts\Database\Connection;
 use Gibbon\Domain\School\SchoolYearTermGateway;
 use Gibbon\Domain\Attendance\AttendanceLogPersonGateway;
@@ -41,6 +42,7 @@ use Gibbon\Domain\Timetable\TimetableDayDateGateway;
 class StudentHistoryData
 {
     protected $pdo;
+    protected $session;
     protected $termGateway;
     protected $attendanceLogGateway;
 	protected $timetableGateway;
@@ -48,12 +50,14 @@ class StudentHistoryData
 
     public function __construct(
         Connection $pdo,
+        Session $session,
         SchoolYearTermGateway $termGateway,
         AttendanceLogPersonGateway $attendanceLogGateway,
 		TimetableDayDateGateway $timetableGateway,
         SettingGateway $settingGateway,
     ) {
         $this->pdo = $pdo;
+        $this->session = $session;
         $this->termGateway = $termGateway;
         $this->attendanceLogGateway = $attendanceLogGateway;
 		$this->timetableGateway = $timetableGateway;
@@ -78,8 +82,7 @@ class StudentHistoryData
 		$showIncomplete = $this->settingGateway->getSettingByScope('Attendance', 'showIncompleteAttendance');
 		
 		// Determine current user's role category (already stored in session)
-		global $session;
-		$roleCategory = $session->get('gibbonRoleIDCurrentCategory') ?? '';
+		$roleCategory = $this->session->get('gibbonRoleIDCurrentCategory') ?? '';
 
 		// Hide incomplete attendance for non-Staff (e.g. students and parents) regardless of setting
 		if ($roleCategory !== 'Staff') {
