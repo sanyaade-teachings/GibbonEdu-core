@@ -75,6 +75,7 @@ v31.0.00
         Staff: fixed staff coverage showing on timetable when not accepted yet or declined
         Staff: fixed the issue of including staff email while submitting a job application form
         School Admin: fixed inactive grade scales not selectable in Manage External Assessment
+        Timetable: fixed incorrect Staff Cover information for activity cover on the timetable
 
     Deprecations
 
