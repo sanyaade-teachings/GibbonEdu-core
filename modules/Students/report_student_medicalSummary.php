@@ -102,7 +102,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Students/report_student_me
         ->pageSize(!empty($viewMode) || $excludeNoConditions == 'Y' ? 0 : 50)
         ->fromPOST();
 
-    $students = $reportGateway->queryStudentDetails($criteria, $choices);
+    $students = $reportGateway->queryStudentDetails($criteria, $gibbonSchoolYearID, $choices);
 
     // Join a set of medical conditions per student
     $medicalIDs = array_filter($students->getColumn('gibbonPersonMedicalID'));
