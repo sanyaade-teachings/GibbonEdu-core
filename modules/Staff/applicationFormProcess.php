@@ -22,13 +22,14 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 use Gibbon\Comms\EmailTemplate;
 use Gibbon\Comms\NotificationEvent;
 use Gibbon\Contracts\Comms\Mailer;
+use Gibbon\Contracts\Filesystem\FileHandler;
+use Gibbon\Services\Format;
 use Gibbon\Data\Validator;
+use Gibbon\Forms\CustomFieldHandler;
+use Gibbon\Forms\PersonalDocumentHandler;
 use Gibbon\Domain\System\EmailTemplateGateway;
 use Gibbon\Domain\System\SettingGateway;
 use Gibbon\Domain\User\UserGateway;
-use Gibbon\Forms\CustomFieldHandler;
-use Gibbon\Forms\PersonalDocumentHandler;
-use Gibbon\Services\Format;
 
 require_once '../../gibbon.php';
 
@@ -154,8 +155,8 @@ if ($proceed == false) {
                 for ($i = 0; $i < $fileCount; ++$i) {
                     if (empty($_FILES["file$i"]['tmp_name'])) continue;
 
-                    $file = (isset($_FILES["file$i"]))? $_FILES["file$i"] : null;
-                    $fileName = (isset($_POST["fileName$i"]))? $_POST["fileName$i"] : null;
+                    $file = (isset($_FILES["file$i"])) ? $_FILES["file$i"] : null;
+                    $fileName = (isset($_POST["fileName$i"])) ? $_POST["fileName$i"] : null;
 
                     // Upload the file, return the /uploads relative path
                     $attachment = $fileUploader->uploadFromPost($file, 'StaffApplicationDocument');
@@ -211,15 +212,36 @@ if ($proceed == false) {
                         $params = ['staff' => true, 'applicationForm' => true];
                         $container->get(PersonalDocumentHandler::class)->updateDocumentsFromPOST('gibbonStaffApplicationForm', $AI, $params, $partialFail);
 
+                        // Manage custom field file uploads for User context
+                        if (!empty($fields)) {
+                            $filesRecorded = $container->get(CustomFieldHandler::class)->manageCustomFieldFileUploads('User', ['staff' => 1, 'applicationForm' => 1], $fields, 'gibbonStaffApplicationForm', $AI);
+                        }
+
+                        // Manage custom field file uploads for Staff context
+                        if (!empty($staffFields)) {
+                            $staffFilesRecorded = $container->get(CustomFieldHandler::class)->manageCustomFieldFileUploads('Staff', ['applicationForm' => 1, 'prefix' => 'customStaff'], $staffFields, 'gibbonStaffApplicationForm', $AI);
+                        }
+
                         // Attach required documents
                         if ($requiredDocuments != false && !empty($uploadedDocuments) && is_array($uploadedDocuments)) {
                             foreach ($uploadedDocuments as $fileName => $attachment) {
-                                //Write files to database, one for each attachment
+                                // Write files to database, one for each attachment
+                                $fileMetaData = $fileUploader->getFileMetaData($attachment);
 
-                                    $dataFile = array('gibbonStaffApplicationFormID' => $AI, 'name' => $fileName, 'path' => $attachment);
-                                    $sqlFile = 'INSERT INTO gibbonStaffApplicationFormFile SET gibbonStaffApplicationFormID=:gibbonStaffApplicationFormID, name=:name, path=:path';
-                                    $resultFile = $connection2->prepare($sqlFile);
-                                    $resultFile->execute($dataFile);
+                                $dataFile = array('gibbonStaffApplicationFormID' => $AI, 'name' => $fileName, 'path' => $attachment);
+                                $sqlFile = 'INSERT INTO gibbonStaffApplicationFormFile SET gibbonStaffApplicationFormID=:gibbonStaffApplicationFormID, name=:name, path=:path';
+                                $resultFile = $connection2->prepare($sqlFile);
+                                $resultFile->execute($dataFile);
+                                    
+                                // Record file tracking
+                                if (!empty($fileMetaData)) {
+                                    $gibbonStaffApplicationFormFileID = $connection2->lastInsertID();
+                                    $gibbonFileID = $container->get(FileHandler::class)->recordFileUpload($fileMetaData, 'gibbonStaffApplicationFormFile', $gibbonStaffApplicationFormFileID, 'path');
+
+                                    if (empty($gibbonFileID)) {
+                                        $partialFail = true;
+                                    }
+                                }
                             }
                         }
 
