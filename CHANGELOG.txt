@@ -57,6 +57,7 @@ v31.0.00
         Planner: added the option to set a location for non-timetables lessons in Lesson Planner
         Reports: added error detection while editing twig templates
         Reports: improved the file path checking while managing archives and uploading bulk reports
+        Reports: added the option to set the report author in Write Reports by Student
         Staff: updated the staff absence message for partial day absence
         Staff: fixed the issue to allow editing coverage request
         Staff: added an indicator at the top of view staff profile to indicate the attendance status and current location location of the staff

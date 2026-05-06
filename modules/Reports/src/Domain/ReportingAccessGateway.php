@@ -434,7 +434,8 @@ class ReportingAccessGateway extends QueryableGateway
         $query = $this
             ->newSelect()
             ->from('gibbonReportingCriteria')
-            ->cols(['gibbonReportingCriteria.gibbonReportingCriteriaID', 'gibbonReportingCriteria.name', 'gibbonReportingCriteria.description', 'gibbonReportingCriteria.category', 'gibbonReportingCriteriaType.name as criteriaName', 'gibbonReportingCriteriaType.valueType', 'gibbonReportingCriteriaType.defaultValue', 'gibbonReportingCriteriaType.characterLimit', 'gibbonReportingCriteriaType.gibbonScaleID', 'gibbonReportingValue.gibbonReportingValueID', 'gibbonReportingValue.gibbonScaleGradeID', 'gibbonReportingValue.value', 'gibbonReportingValue.comment'])
+            ->cols(['gibbonReportingCriteria.gibbonReportingCriteriaID', 'gibbonReportingCriteria.name', 'gibbonReportingCriteria.description', 'gibbonReportingCriteria.category', 'gibbonReportingCriteriaType.name as criteriaName', 'gibbonReportingCriteriaType.valueType', 'gibbonReportingCriteriaType.defaultValue', 'gibbonReportingCriteriaType.characterLimit', 'gibbonReportingCriteriaType.gibbonScaleID', 'gibbonReportingValue.gibbonReportingValueID', 'gibbonReportingValue.gibbonScaleGradeID', 'gibbonReportingValue.value', 'gibbonReportingValue.comment', 
+            'gibbonReportingValue.gibbonReportingValueID', 'gibbonReportingValue.gibbonPersonIDCreated', 'gibbonReportingValue.gibbonPersonIDModified'])
             ->innerJoin('gibbonReportingCriteriaType', 'gibbonReportingCriteriaType.gibbonReportingCriteriaTypeID=gibbonReportingCriteria.gibbonReportingCriteriaTypeID')
             ->leftJoin('gibbonReportingValue', 'gibbonReportingValue.gibbonReportingCriteriaID=gibbonReportingCriteria.gibbonReportingCriteriaID AND gibbonReportingValue.gibbonPersonIDStudent=:gibbonPersonIDStudent')
             ->where('gibbonReportingCriteria.gibbonReportingScopeID=:gibbonReportingScopeID')
