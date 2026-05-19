@@ -59,6 +59,8 @@ v31.0.00
         Reports: added error detection while editing twig templates
         Reports: improved the file path checking while managing archives and uploading bulk reports
         Reports: added the option to set the report author in Write Reports by Student
+        Reports: added the option to mark issues as resolved in Student Name Conflicts
+        Reports: added checks for missing names and incorrect pronouns to Student Name Conflicts
         Staff: updated the staff absence message for partial day absence
         Staff: fixed the issue to allow editing coverage request
         Staff: added an indicator at the top of view staff profile to indicate the attendance status and current location location of the staff
